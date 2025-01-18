@@ -73,8 +73,8 @@ class SearchEngineApp:
         self.help_button.pack(pady=10)
 
         # Кнопка отчета
-       ## self.report_button = tk.Button(self.root, text="Отчет", command=self.show_report)
-       ## self.report_button.pack(pady=10)
+        self.report_button = tk.Button(self.root, text="Отчет", command=self.show_report)
+        self.report_button.pack(pady=10)
 
     def perform_search(self):
         """Выполняет поиск документов по введенному тексту."""
@@ -137,22 +137,14 @@ class SearchEngineApp:
         messagebox.showinfo("Помощь", help_text)
 
     def show_report(self):
-        """Открывает файл README.md."""
-        print("Кнопка 'Отчет' нажата.")  # Отладочное сообщение
+        readme_path = "README.md"  # Укажите правильный путь к вашему README файлу
         try:
-            # Получаем абсолютный путь к файлу README.md
-            readme_path = os.path.abspath('README.md')
-            print("Путь к файлу README.md:", readme_path)  # Отладочный вывод
-
-            # Открываем файл с помощью стандартного приложения
-            if os.name == 'nt':  # Для Windows
-                os.startfile(readme_path)
-            elif os.name == 'posix':  # Для macOS и Linux
-                subprocess.run(['open', readme_path])  # macOS
-                # subprocess.run(['xdg-open', readme_path])  # Linux
+            os.startfile(readme_path)  # Для Windows
+        except AttributeError:
+            os.system(f"open {readme_path}")  # Для MacOS
         except Exception as e:
-            print("Ошибка при открытии файла:", e)  # Отладочное сообщение
-            messagebox.showerror("Ошибка", f"Не удалось открыть файл README.md: {e}")
+            messagebox.showerror("Ошибка", f"Не удалось открыть файл: {e}")
+
 
 
 
